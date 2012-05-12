@@ -1,7 +1,7 @@
 require "optparse"
 require "rexml/document"
-require "rexml/parsers/pullparser" 
-require "pry"
+#require "rexml/parsers/pullparser" 
+#require "pry"
 
 option = Hash.new
 opts = OptionParser.new
