@@ -3,7 +3,11 @@
  <foo>
   aaaaaaaaaaaaaa日本 語
  <child>
-  childdata
+  childdata,
+    childdata,
+    childdata,
+  childdata,
+  childdata.
  </child>
  </foo>
 

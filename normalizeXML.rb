@@ -45,15 +45,16 @@ end
 #end
 
 def trim_text inp
-  inp.gsub( "\n","").strip
+  inp.gsub( "\n","").gsub(" ","")
 end
+
 
 def swap_text elements, trim
   elements.each do |element|
     unless element.parent?
 #      binding.pry
       set_val = element.value
-      set_val = trim_text(set_val) if trim
+      set_val = trim_text(set_val) if trim 
       element.value = set_val
     else 
       swap_text element, trim
