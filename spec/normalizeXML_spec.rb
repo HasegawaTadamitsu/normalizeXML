@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-require 'rspec'
+
 require 'simplecov'
 require 'simplecov-rcov'
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-SimpleCov.start 'normalizeXML'
+SimpleCov.start 'rails'
+
+require 'rspec'
 
 begin
   require File.join(File.dirname(__FILE__), '../normalizeXML.rb')
