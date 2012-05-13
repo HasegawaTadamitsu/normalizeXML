@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'rspec'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 begin
   require File.join(File.dirname(__FILE__), '../normalizeXML.rb')
