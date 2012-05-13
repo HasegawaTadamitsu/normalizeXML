@@ -3,7 +3,7 @@
 require 'simplecov'
 require 'simplecov-rcov'
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-SimpleCov.start 'rails'
+SimpleCov.start
 
 require 'rspec'
 
@@ -32,6 +32,11 @@ describe "optionに関して" do
 
   it "オプションが無いとき" do
     noarg = NormalizeXML.new []
+    noarg.checkOption.should be_false
+  end
+
+  it "意図しないオプションが指定されたとき" do
+    noarg = NormalizeXML.new ['-aa']
     noarg.checkOption.should be_false
   end
 
