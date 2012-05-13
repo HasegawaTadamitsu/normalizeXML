@@ -2,7 +2,7 @@
 require 'rspec'
 
 begin
-  require '../normalizeXML.rb'
+  require File.join(File.dirname(__FILE__), '../normalizeXML.rb')
 rescue SystemExit
 end
 
