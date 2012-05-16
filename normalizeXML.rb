@@ -6,17 +6,18 @@ require "rexml/document"
 class NormalizeXML
 
   def trim_text inp
-    inp.gsub( "\n","").gsub(" ","")
+    inp.gsub( "\n","").gsub(" ","").gsub("\t","")
   end
 
   def swap_text elements, trim
     elements.each do |element|
-      unless element.parent?
-#       binding.pry
+      if element.respond_to? :value
         set_val = element.value
         set_val = trim_text(set_val) if trim 
         element.value = set_val
-      else 
+      end
+      if element.parent?
+#       binding.pry
         swap_text element, trim
       end
     end

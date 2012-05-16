@@ -46,6 +46,7 @@ describe "normalizeに関して" do
 input=<<EOF
 <?xml version="1.0" encoding="UTF-8"?> 
 <hello>
+<!-- comment -->
  <foo>
   aaaaaaaaaaaaaa日本 語
  <child>
@@ -62,7 +63,7 @@ EOF
 collect=<<EOF
 <?xml version='1.0' encoding='UTF-8'?> 
 <hello
-><foo
+><!-- comment --><foo
   >aaaaaaaaaaaaaa日本語<child
     >childdata,childdata,childdata,childdata,childdata.</child
     ></foo
