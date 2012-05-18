@@ -22,12 +22,25 @@ describe "optionに関して" do
     opt[:trim_flag].should be_true
   end
 
+  it "-d dirname と正常な場合" do
+    noarg = NormalizeXML.new ['-d','dir']
+    noarg.checkOption.should be_true
+    opt = noarg.instance_eval{ @option }
+    opt[:dirname].should == 'dir'
+    opt[:trim_flag].should be_true
+  end
+
   it "-f example.xml -t と正常な時" do
     noarg = NormalizeXML.new ['-f','example.xml','-t']
     noarg.checkOption.should be_true
     opt = noarg.instance_eval{ @option }
     opt[:filename].should == 'example.xml'
     opt[:trim_flag].should be_false
+  end
+
+  it "-d dirname -f の両方指定した場合" do
+    noarg = NormalizeXML.new ['-d','dir','-f','filename']
+    noarg.checkOption.should be_false
   end
 
   it "オプションが無いとき" do
@@ -95,4 +108,12 @@ describe "trim_textに関して" do
     out.should == "abca"
   end
 
+end
+
+describe "createNormalizeXMLFilenameに関して" do
+  it "実行例"  do
+    normalize = NormalizeXML.new []
+    ret = normalize.createNormalizeXMLFilename "abc.xml"
+    ret.should == "abc.normalizedXML"
+  end
 end

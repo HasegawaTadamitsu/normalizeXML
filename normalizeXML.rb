@@ -36,6 +36,10 @@ class NormalizeXML
       @option[:filename] = v
     end
 
+    opts.on '-d d','--dirname','dirname ' do |v|
+      @option[:dirname] = v
+    end
+
     opts.on '-t','--trimoff','trim off' do |v|
       @option[:trim_flag] = false
     end
@@ -54,19 +58,53 @@ class NormalizeXML
       return false
     end
 
-    if @option[:filename].nil?
-      puts "need filename option "
+    if @option[:filename].nil? and @option[:dirname].nil?
+      puts "need filename or dirname option "
       puts opts.help
       return false
     end
+
+    if (!@option[:filename].nil?) and(! @option[:dirname].nil?)
+      puts "filename or dirname option "
+      puts opts.help
+      return false
+    end
+
     return true
    end
 
-   def normalize
-     doc = REXML::Document.new File.new @option[:filename] 
-     swap_text doc.root, @option[:trim_flag]
-     doc.write $stdout,2,true
+   def createNormalizeXMLFilename filename
+     File.basename(filename,".xml") + ".normalizedXML"
    end
+
+   def normalizeFilename filename
+     newFilename= createNormalizeXMLFilename filename
+     doc = REXML::Document.new File.new filename
+     swap_text doc.root, @option[:trim_flag]
+     File.open(newFilename,"w") do |f|
+       doc.write f,2,true
+     end
+   end
+
+   def getXMLFiles dirname
+     ret.concat Dir::glob dir + "/**/*.[xX][mM][lL]"
+   end
+
+   def normalizeDir dirname
+     files = getXMLFiles dirname
+     files.each do |file|
+       normalizeFilename  file
+     end
+   end
+
+   def normalize
+     unless @option[:filename].nil?
+       normalizeFilename @option[:filename]
+       return
+     end
+     normalizeDir @option[:dirnmae]
+   end
+
 end
 
 normalizeXML = NormalizeXML.new ARGV
