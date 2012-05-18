@@ -74,7 +74,9 @@ class NormalizeXML
    end
 
    def createNormalizeXMLFilename filename
-     File.basename(filename,".xml") + ".normalizedXML"
+     dir = File.dirname filename
+     file = File.basename(filename,".xml") + ".normalizedXML"
+     File.join(dir,file)
    end
 
    def normalizeFilename filename
@@ -87,7 +89,7 @@ class NormalizeXML
    end
 
    def getXMLFiles dirname
-     ret.concat Dir::glob dir + "/**/*.[xX][mM][lL]"
+     Dir::glob dirname + "/**/*.[xX][mM][lL]"
    end
 
    def normalizeDir dirname
@@ -102,7 +104,7 @@ class NormalizeXML
        normalizeFilename @option[:filename]
        return
      end
-     normalizeDir @option[:dirnmae]
+     normalizeDir @option[:dirname]
    end
 
 end
