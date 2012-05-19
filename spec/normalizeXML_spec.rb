@@ -110,10 +110,29 @@ describe "trim_textに関して" do
 
 end
 
-describe "createNormalizeXMLFilenameに関して" do
+describe "etc" do
   it "実行例"  do
     normalize = NormalizeXML.new []
     ret = normalize.createNormalizeXMLFilename "abc.xml"
-    ret.should == "abc.normalizedXML"
+    ret.should == "./abc.normalizedXML"
   end
+
+  it "実行例"  do
+    normalize = NormalizeXML.new []
+    ret = normalize.getXMLFiles "./"
+    ret[0].should == ".//spec/example.xml"
+  end
+
+  it "実行例"  do
+    normalize = NormalizeXML.new ["-d","./"]
+    normalize.checkOption.should be_true
+    normalize.execute
+  end
+
+  it "実行例"  do
+    normalize = NormalizeXML.new ["-f","./spec/example.xml"]
+    normalize.checkOption.should be_true
+    normalize.execute
+  end
+
 end

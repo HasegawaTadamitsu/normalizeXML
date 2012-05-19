@@ -69,49 +69,48 @@ class NormalizeXML
       puts opts.help
       return false
     end
-
     return true
-   end
+  end
 
-   def createNormalizeXMLFilename filename
-     dir = File.dirname filename
-     file = File.basename(filename,".xml") + ".normalizedXML"
-     File.join(dir,file)
-   end
+  def createNormalizeXMLFilename filename
+    dir = File.dirname filename
+    file = File.basename(filename,".xml") + ".normalizedXML"
+    File.join(dir,file)
+  end
 
-   def normalizeFilename filename
-     newFilename= createNormalizeXMLFilename filename
-     doc = REXML::Document.new File.new filename
-     swap_text doc.root, @option[:trim_flag]
-     File.open(newFilename,"w") do |f|
-       doc.write f,2,true
-     end
-   end
+  def normalizeFilename inputFileName
+    doc = REXML::Document.new File.new inputFileName
+    swap_text doc.root, @option[:trim_flag]
+    outputFileName = createNormalizeXMLFilename inputFileName
+    File.open( outputFileName,"w") do |f|
+      doc.write f, 2, true
+    end
+  end
 
-   def getXMLFiles dirname
-     Dir::glob dirname + "/**/*.[xX][mM][lL]"
-   end
+  def getXMLFiles dirname
+    Dir::glob dirname + "/**/*.[xX][mM][lL]"
+  end
 
-   def normalizeDir dirname
-     files = getXMLFiles dirname
-     files.each do |file|
-       normalizeFilename  file
-     end
-   end
+  def normalizeDir dirname
+    files = getXMLFiles dirname
+    files.each do |file|
+      normalizeFilename  file
+    end
+  end
 
-   def normalize
-     unless @option[:filename].nil?
-       normalizeFilename @option[:filename]
-       return
-     end
-     normalizeDir @option[:dirname]
-   end
+  def execute
+    unless @option[:filename].nil?
+      normalizeFilename @option[:filename]
+      return
+    end
+    normalizeDir @option[:dirname]
+  end
 
 end
 
 normalizeXML = NormalizeXML.new ARGV
 exit 1 unless normalizeXML.checkOption
-normalizeXML.normalize
+normalizeXML.execute
 
 #memo
 #
