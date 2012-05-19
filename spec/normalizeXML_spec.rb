@@ -50,13 +50,22 @@ describe "Mainに関して" do
     opt[:dirname].should == 'b'
   end
 
+  it "不正なオプションの振る舞い" do
+    main = Main.new ['-xx']
+    (main.__send__ :checkOption).should be_false
+    opt = main.instance_eval{ @option }
+    opt[:trim_flag].should be_true
+  end
+
   it "optionなしの振る舞い" do
     main = Main.new []
     (main.__send__ :checkOption).should be_false
     opt = main.instance_eval{ @option }
     opt[:trim_flag].should be_true
   end
+
 end
+
 describe "NormalizeXMLに関して" do
 
   it "trimの確認" do
