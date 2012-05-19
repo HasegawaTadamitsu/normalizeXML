@@ -111,8 +111,23 @@ EOF
 
   it "createNormalizeXMLFilename"  do
     xml = NormalizeXML.new true
-    (xml.__send__ :createNormalizeXMLFilename, "abc" ).should =="./abc.normalizedXML"
-    (xml.__send__ :createNormalizeXMLFilename, "abc.xml" ).should =="./abc.normalizedXML"
+    (xml.__send__ :createNormalizeXMLFilename, "abc" ).should == "./abc.normalizedXML"
+    (xml.__send__ :createNormalizeXMLFilename, "abc.xml" ).should == "./abc.normalizedXML"
   end
 
+  it "getXMLFiles"  do
+    xml = NormalizeXML.new []
+    ret = xml.__send__ :getXMLFiles, "./" 
+    ret[0].should == ".//spec/example.xml"
+  end
+
+  it "実行例"  do
+    main = Main.new ["-d","./"]
+    main.execute
+  end
+
+  it "実行例"  do
+    main = Main.new ["-f","./spec/example.xml"]
+    main.execute
+  end
 end
